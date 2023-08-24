@@ -127,6 +127,7 @@ namespace BuscaMinasDesktop
 
             if (e.Button == MouseButtons.Left)
             {
+                nuevo.DestaparCelda(row, col);
             }
         }
         }
