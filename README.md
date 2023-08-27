@@ -13,4 +13,4 @@ estado actual: me faltan cosas menores.
 
 **Ejercicio 3: Juego de la vida (coway)**<br/>
 
-[https://studio.youtube.com/video/z2bIIrHhbps/edit](https://www.youtube.com/watch?v=z2bIIrHhbps&feature=youtu.be)https://www.youtube.com/watch?v=z2bIIrHhbps&feature=youtu.be
+[Video  que muestra funcionando en una aplicación de línea de comandos en laboratorio 1 2022(https://img.youtube.com/vi/C75baT6qJQzX_OFX/0.jpg)](https://www.youtube.com/watch?v=z2bIIrHhbps)
