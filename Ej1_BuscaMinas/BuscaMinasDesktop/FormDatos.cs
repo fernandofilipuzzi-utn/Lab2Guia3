@@ -27,6 +27,12 @@ namespace BuscaMinasDesktop
                 tbNombre.BackColor = Color.Orange;
             }
 
+            if (cbNivel.SelectedIndex == -1)
+            {
+                isNoOk |= true;
+                cbNivel.BackColor = Color.Orange;
+            }
+
             if (isNoOk == false)
                 DialogResult = DialogResult.OK;
             else
@@ -36,6 +42,13 @@ namespace BuscaMinasDesktop
         private void tbNombre_TextChanged(object sender, EventArgs e)
         {
             tbNombre.BackColor = Color.White;
+        }
+
+        private void cbNivel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cbNivel.BackColor = Color.White;
+
+            groupBox1.Enabled = cbNivel.SelectedIndex == 3;
         }
     }
 }

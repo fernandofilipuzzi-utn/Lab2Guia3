@@ -35,9 +35,28 @@ namespace BuscaMinasDesktop
             if (fDato.ShowDialog() == DialogResult.OK)
             {
                 string nombreJugador = fDato.tbNombre.Text;
-                int filas = Convert.ToInt32( fDato.nudFilas.Value) ;
-                int columnas = Convert.ToInt32(fDato.nudColumnas.Value);
-                int minas = Convert.ToInt32(fDato.nudMinas.Value);
+
+                int filas = 0;
+                int columnas = 0;
+                int minas = 0;
+                if (fDato.cbNivel.SelectedIndex == 0)
+                {
+                    filas = 8;
+                    columnas = 8;
+                    minas = 10;
+                }
+                else if (fDato.cbNivel.SelectedIndex == 1)
+                {
+                    filas = 16;
+                    columnas = 16;
+                    minas = 40;
+                }
+                else 
+                {
+                    filas = Convert.ToInt32(fDato.nudFilas.Value);
+                    columnas = Convert.ToInt32(fDato.nudColumnas.Value);
+                    minas = Convert.ToInt32(fDato.nudMinas.Value);
+                }
 
                 nuevo = new BuscaMinas(nombreJugador,filas, columnas, minas);
 
@@ -99,6 +118,7 @@ namespace BuscaMinasDesktop
             dgvTablero.ColumnHeadersVisible = false;
             dgvTablero.RowHeadersVisible = false;
             dgvTablero.ScrollBars = ScrollBars.None;
+            dgvTablero.BackgroundColor = Color.Gray;
 
             dgvTablero.RowCount = nuevo.Filas;
             dgvTablero.ColumnCount = nuevo.Columnas;
@@ -115,6 +135,7 @@ namespace BuscaMinasDesktop
                     
                     dgvTablero[n, m].Style.Font = new Font("Courier New", 12);
                     dgvTablero[n, m].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    dgvTablero[n, m].Style.BackColor = Color.Gray;
                 }
             }
 
@@ -142,6 +163,7 @@ namespace BuscaMinasDesktop
                         if (c.MinasAlrededor != 0)
                         {
                             dgvTablero[n, m].Value = c.MinasAlrededor.ToString();
+                            dgvTablero[n, m].Style.BackColor = Color.LightGray;
                         }
                         else
                         {
@@ -152,6 +174,7 @@ namespace BuscaMinasDesktop
                             else
                             {
                                 dgvTablero[n, m].Value = "";
+                                dgvTablero[n, m].Style.BackColor = Color.LightGray;
                             }
                         }
                     }

@@ -42,7 +42,7 @@ namespace GeneradorClassLib
                 numeros[nro] = numeros[--cantidad];
 
                 fila = numero / this.columnas;
-                columna = numero /  this.filas;
+                columna = numero % this.columnas;
             }
 
             return numero;
