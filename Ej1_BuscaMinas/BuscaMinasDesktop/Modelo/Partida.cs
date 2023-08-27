@@ -8,13 +8,13 @@ namespace BuscaMinasDesktop.Modelo
 {
     class Partida
     {
-        public string Ganador { get; set; }
-        public int Ganadas { get; set; }
+        public string Participante { get; set; }
+        public int Tiempo { get; set; }
 
         public Partida(string ganador, int ganadas)
         {
-            this.Ganador = ganador;
-            this.Ganadas = ganadas;
+            this.Participante = ganador;
+            this.Tiempo = ganadas;
         }
     }
 }

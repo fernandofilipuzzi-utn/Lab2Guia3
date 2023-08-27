@@ -28,58 +28,50 @@ namespace BuscaMinasDesktop
         {
         }
 
-        private void btnJugar_Click(object sender, EventArgs e)
-        {
-            
-            
-        }
-
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             FormDatos fDato = new FormDatos();
 
             if (fDato.ShowDialog() == DialogResult.OK)
             {
-                int filas = Convert.ToInt32( fDato.numericUpDown1.Value) ;
-                int columnas = Convert.ToInt32(fDato.numericUpDown2.Value);
-                int minas = = Convert.ToInt32(fDato.numericUpDown3.Value);
+                string nombreJugador = fDato.tbNombre.Text;
+                int filas = Convert.ToInt32( fDato.nudFilas.Value) ;
+                int columnas = Convert.ToInt32(fDato.nudColumnas.Value);
+                int minas = Convert.ToInt32(fDato.nudMinas.Value);
 
-                nuevo = new BuscaMinas(fDato.tbNombre.Text,filas, columnas, minas);
+                nuevo = new BuscaMinas(nombreJugador,filas, columnas, minas);
 
                 IniciarTablero();
                 PintarTablero();
             }
         }
-        
-    
 
         private void btnListarHistorial_Click(object sender, EventArgs e)
         {
             FormHistorial fHistorial = new FormHistorial();
 
             foreach (Partida p in ListarPartidasOrdenadas())
-                fHistorial.listBox1.Items.Add($"{ p.Ganador}  {p.Ganadas}");
+                fHistorial.listBox1.Items.Add($"{ p.Participante}  {p.Tiempo}");
 
             fHistorial.ShowDialog();
 
             fHistorial.Dispose();
         }
                 
-        public void AgregarPartida(string nombre)
+        public void AgregarPartida(string nombre, int tiempo)
         {
-            //buscar el registro
             Partida buscado = null;
             for (int n = 0; n < partidas.Count && buscado == null; n++)
             {
                 Partida p = (Partida)partidas[n];
-                if (p.Ganador == nombre)
+                if (p.Participante == nombre)
                     buscado = p;
             }
 
             if (buscado != null)
-                buscado.Ganadas++;
+                buscado.Tiempo=tiempo;
             else
-                partidas.Add(new Partida(nombre, 1));
+                partidas.Add(new Partida(nombre, tiempo));
         }
 
         public ArrayList ListarPartidasOrdenadas()
@@ -91,7 +83,7 @@ namespace BuscaMinasDesktop
                     Partida p = (Partida)partidas[n];
                     Partida q = (Partida)partidas[m];
 
-                    if (p.Ganadas < q.Ganadas)
+                    if (p.Tiempo > q.Tiempo)
                     {
                         object aux = partidas[n];
                         partidas[n] = partidas[m];
@@ -104,23 +96,74 @@ namespace BuscaMinasDesktop
 
         public void IniciarTablero()
         {
-            dataGridView1.RowCount = nuevo.Filas;
-            dataGridView1.ColumnCount = nuevo.Filas;
+            dgvTablero.ColumnHeadersVisible = false;
+            dgvTablero.RowHeadersVisible = false;
+            dgvTablero.ScrollBars = ScrollBars.None;
 
+            dgvTablero.RowCount = nuevo.Filas;
+            dgvTablero.ColumnCount = nuevo.Columnas;
 
+            for (int m = 0; m < dgvTablero.RowCount; m++)
+            {
+                dgvTablero.Rows[m].Height = (dgvTablero.ClientSize.Height) / dgvTablero.RowCount;
+                dgvTablero.Rows[m].Resizable = DataGridViewTriState.False;
+                
+                for (int n = 0; n < dgvTablero.ColumnCount; n++)
+                {
+                    dgvTablero.Columns[n].Width = (dgvTablero.ClientSize.Width) / dgvTablero.ColumnCount;
+                    dgvTablero.Columns[n].Resizable = DataGridViewTriState.False;
+                    
+                    dgvTablero[n, m].Style.Font = new Font("Courier New", 12);
+                    dgvTablero[n, m].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                }
+            }
+
+            timer1.Stop();
+
+            timer1.Interval = 1000;
+            timer1.Start();
+            tiempo = 0;
+
+            dgvTablero.Enabled = true;
         }
-        public void PintarTablero() 
+        public void PintarTablero()
         {
-            
+            for (int m = 0; m < dgvTablero.RowCount; m++)
+            {
+                for (int n = 0; n < dgvTablero.ColumnCount; n++)
+                {
+                    Celda c = nuevo[m, n];
+                    if (c.Estado == Celda.TipoEstado.Oculta)
+                    {
+                        dgvTablero[n, m].Value = "█";
+                    }
+                    else if (c.Estado == Celda.TipoEstado.Despejado)
+                    {
+                        if (c.MinasAlrededor != 0)
+                        {
+                            dgvTablero[n, m].Value = c.MinasAlrededor.ToString();
+                        }
+                        else
+                        {
+                            if (c.HayMina == true)
+                            {
+                                dgvTablero[n, m].Value = "◍";
+                            }
+                            else
+                            {
+                                dgvTablero[n, m].Value = "";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        dgvTablero[n, m].Value = "☠";
+                    }
+                }
+            }
         }
 
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            
-         
-        }
-
-        private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void dgvTablero_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             int row = e.RowIndex;
             int col = e.ColumnIndex;
@@ -129,7 +172,25 @@ namespace BuscaMinasDesktop
             {
                 nuevo.DestaparCelda(row, col);
             }
+            if (e.Button == MouseButtons.Right)
+            {
+                nuevo.MarcarCelda(row, col);
+            }
+
+            PintarTablero();
+
+            if (nuevo.HaFinalizado() == true)
+            {
+                timer1.Stop();
+                AgregarPartida(nuevo.Jugador, tiempo);
+                dgvTablero.Enabled = false;
+            }
         }
+
+        int tiempo=0;
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            lbTiempo.Text = (tiempo++).ToString("0000") ; 
         }
     }
 }

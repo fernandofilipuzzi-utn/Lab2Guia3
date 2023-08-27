@@ -10,7 +10,7 @@ namespace GeneradorClassLib
 {
     public class Generador
     {
-        public int[] numeros = new int[52];
+        public int[] numeros;
         int filas, columnas;
         int cantidad;
 
@@ -20,6 +20,8 @@ namespace GeneradorClassLib
             this.filas = filas;
             this.columnas = columnas;
             cantidad = filas * columnas;
+
+            numeros = new int[cantidad];
 
             for (int n = 0; n < cantidad; n++)
             {
@@ -38,7 +40,11 @@ namespace GeneradorClassLib
                 int nro = azar.Next(0, cantidad);
                 numero = numeros[nro];
                 numeros[nro] = numeros[--cantidad];
+
+                fila = numero / this.columnas;
+                columna = numero /  this.filas;
             }
+
             return numero;
         }
     }

@@ -33,15 +33,15 @@ namespace BuscaMinasDesktop
             this.button1 = new System.Windows.Forms.Button();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.nudFilas = new System.Windows.Forms.NumericUpDown();
+            this.nudColumnas = new System.Windows.Forms.NumericUpDown();
+            this.nudMinas = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudFilas)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudColumnas)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMinas)).BeginInit();
             this.SuspendLayout();
             // 
             // tbNombre
@@ -82,26 +82,26 @@ namespace BuscaMinasDesktop
             this.label1.TabIndex = 3;
             this.label1.Text = "Nombre";
             // 
-            // numericUpDown1
+            // nudFilas
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(121, 46);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown1.TabIndex = 4;
+            this.nudFilas.Location = new System.Drawing.Point(121, 46);
+            this.nudFilas.Name = "nudFilas";
+            this.nudFilas.Size = new System.Drawing.Size(120, 20);
+            this.nudFilas.TabIndex = 4;
             // 
-            // numericUpDown2
+            // nudColumnas
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(121, 72);
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown2.TabIndex = 5;
+            this.nudColumnas.Location = new System.Drawing.Point(121, 72);
+            this.nudColumnas.Name = "nudColumnas";
+            this.nudColumnas.Size = new System.Drawing.Size(120, 20);
+            this.nudColumnas.TabIndex = 5;
             // 
-            // numericUpDown3
+            // nudMinas
             // 
-            this.numericUpDown3.Location = new System.Drawing.Point(121, 98);
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown3.TabIndex = 6;
+            this.nudMinas.Location = new System.Drawing.Point(121, 98);
+            this.nudMinas.Name = "nudMinas";
+            this.nudMinas.Size = new System.Drawing.Size(120, 20);
+            this.nudMinas.TabIndex = 6;
             // 
             // label2
             // 
@@ -138,18 +138,18 @@ namespace BuscaMinasDesktop
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.numericUpDown3);
-            this.Controls.Add(this.numericUpDown2);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.nudMinas);
+            this.Controls.Add(this.nudColumnas);
+            this.Controls.Add(this.nudFilas);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.tbNombre);
             this.Name = "FormDatos";
             this.Text = "Juego Nuevo";
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudFilas)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudColumnas)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMinas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -160,9 +160,9 @@ namespace BuscaMinasDesktop
         private System.Windows.Forms.Button btnAceptar;
         public System.Windows.Forms.TextBox tbNombre;
         private System.Windows.Forms.Label label1;
-        public System.Windows.Forms.NumericUpDown numericUpDown1;
-        public System.Windows.Forms.NumericUpDown numericUpDown2;
-        public System.Windows.Forms.NumericUpDown numericUpDown3;
+        public System.Windows.Forms.NumericUpDown nudFilas;
+        public System.Windows.Forms.NumericUpDown nudColumnas;
+        public System.Windows.Forms.NumericUpDown nudMinas;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;

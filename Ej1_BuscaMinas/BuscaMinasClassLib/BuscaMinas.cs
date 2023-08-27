@@ -10,79 +10,146 @@ namespace BuscaMinasClassLib
     public class BuscaMinas
     {
         Celda[,] tablero;
-
+        int despejadasYMarcadas;
         public int Filas { get; private set; }
         public int Columnas { get; private set; }
         public string Jugador { get; set; }
 
-        public Celda this[int m, int n] 
+        public Celda this[int fila, int columna] 
         {
             get 
             {
-                return tablero[m, n];
+                Celda celda=null;
+
+                if(fila>=0 && columna>=0 && fila < Filas && columna < Columnas)
+                    celda=tablero[fila, columna];
+
+                return celda;
             }
         }
 
         public BuscaMinas(string jugador, int filas, int columnas, int minas)
         {
+            Jugador = jugador;
             Filas = filas;
             Columnas = columnas;
-            tablero = new Celda[filas, columnas];
-            for (int n = 0; n < filas; n++)
-                for (int m = 0; m < filas; m++)
-                    tablero[n, m] = new Celda() { Estado = Celda.TipoEstado.Oculta, HayMina = false, MinasAlrededor = 0 };
 
+            tablero = new Celda[Filas, Columnas];
+            for (int m = 0; m < Filas; m++)
+            {
+                for (int n = 0; n < Columnas; n++)
+                {
+                    tablero[m, n] = new Celda() { Estado = Celda.TipoEstado.Oculta, HayMina = false, MinasAlrededor = 0 };
+                }
+            }
+
+            #region minado el terreno!
             Generador azar = new Generador(filas, columnas);
-
             for (int n = 0; n < minas; n++)
             {
                 int p,q;
-                int nro = azar.Extraer(out p, out q);
-                tablero[p, q].HayMina = true;
+                azar.Extraer(out p, out q);
+                if(this[p, q]!=null)
+                    this[p, q].HayMina = true;
             }
+            #endregion
 
-            for (int n = 0; n < filas; n++)
+            #region contando la vencidad con minas
+            for (int m = 0; m < Filas; m++)
             {
-                for (int m = 0; m < filas; m++)
+                for (int n = 0; n < Columnas; n++)
                 {
-                    //
-                    for (int p = n-1; p < n+1; p++)
+                    if (this[m, n].HayMina == false)
                     {
-                        for (int q = m-1; q < m+1; q++)
+                        for (int p = m - 1; p < m + 2; p++)
                         {
-                            if (p >= 0 && q >= 0 && (p==1 && q==1)==false )
+                            for (int q = n - 1; q < n + 2; q++)
                             {
-                                tablero[m, n].MinasAlrededor++;
+                                if (this[p, q]!=null && (p == m && q == n) == false && this[p, q].HayMina == true)
+                                {
+                                    this[m, n].MinasAlrededor++;
+                                }
                             }
                         }
                     }
                     //
                 }
             }
-
+            #endregion
         }
 
-        public void DestaparCelda(int m, int n)
+        public void MarcarCelda(int fila, int columna)
         {
-            if (this[m, n].HayMina != false)
-                DestaparCeldasVecinas(m, n);
-        }
-
-        public void DestaparCeldasVecinas(int m, int n)
-        {
-            if(this[m, n].HayMina != false)
-                this[m, n].Estado = Celda.TipoEstado.Despejado;
-
-            if (this[m, n].MinasAlrededor == 0 && this[m, n].HayMina != false)
+            if (this[fila, columna].Estado == Celda.TipoEstado.Marcada)
             {
-                for (int p = n - 1; p < n + 1; p++)
+                this[fila, columna].Estado = Celda.TipoEstado.Oculta;
+                if (this[fila, columna].HayMina==true)
                 {
-                    for (int q = m - 1; q < m + 1; q++)
+                    despejadasYMarcadas--;
+                }
+            }
+            else if (this[fila, columna].Estado == Celda.TipoEstado.Oculta)
+            {
+                this[fila, columna].Estado = Celda.TipoEstado.Marcada;
+                if (this[fila, columna].HayMina==true)
+                {
+                    despejadasYMarcadas++;
+                }
+            }
+        }
+
+        public void DestaparCelda(int fila, int columna)
+        {
+            if (this[fila, columna].HayMina == false)
+            {
+                DestaparCeldasVecinas(fila, columna);
+            }
+            else
+            {
+                haFinalizado = true;
+                this[fila, columna].HaDetonado = true;
+                MostrarMinasRestantes(this[fila, columna]);
+            }
+        }
+
+        bool haFinalizado = false;
+        public bool HaFinalizado()
+        {
+            return haFinalizado || despejadasYMarcadas == Filas * Columnas;
+        }
+
+        private void DestaparCeldasVecinas(int fila, int columna)
+        {
+            if (this[fila, columna].HayMina == false && this[fila, columna].Estado != Celda.TipoEstado.Despejado)
+            {
+                this[fila, columna].Estado = Celda.TipoEstado.Despejado;
+                despejadasYMarcadas++;
+
+                if (this[fila, columna].MinasAlrededor == 0)
+                {
+                    for (int p = fila - 1; p < fila + 2; p++)
                     {
-                        if (p >= 0 && q >= 0 && (p == 1 && q == 1) == false)
+                        for (int q = columna - 1; q < columna + 2; q++)
                         {
-                            DestaparCeldasVecinas(p, q);
+                            if (this[p,q]!=null && (p == fila && q == columna) == false)
+                            {
+                                DestaparCeldasVecinas(p, q);
+                            }
                         }
+                    }
+                }
+            }
+        }
+
+        private void MostrarMinasRestantes(Celda minaDetonada)
+        {
+            for (int m = 0; m < Filas; m++)
+            {
+                for (int n = 0; n < Columnas; n++)
+                {
+                    if (this[m, n].HayMina == true && this[m, n]!=minaDetonada && this[m,n].Estado!=Celda.TipoEstado.Marcada)
+                    {
+                        this[m, n].Estado = Celda.TipoEstado.Despejado;
                     }
                 }
             }
