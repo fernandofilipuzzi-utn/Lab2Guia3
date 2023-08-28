@@ -41,7 +41,7 @@ namespace BuscaMinasDesktop
             // 
             // btnNuevo
             // 
-            this.btnNuevo.Location = new System.Drawing.Point(257, 2);
+            this.btnNuevo.Location = new System.Drawing.Point(391, 2);
             this.btnNuevo.Name = "btnNuevo";
             this.btnNuevo.Size = new System.Drawing.Size(56, 50);
             this.btnNuevo.TabIndex = 9;
@@ -51,9 +51,9 @@ namespace BuscaMinasDesktop
             // 
             // btnVerHistorial
             // 
-            this.btnVerHistorial.Location = new System.Drawing.Point(562, 104);
+            this.btnVerHistorial.Location = new System.Drawing.Point(734, 7);
             this.btnVerHistorial.Name = "btnVerHistorial";
-            this.btnVerHistorial.Size = new System.Drawing.Size(104, 55);
+            this.btnVerHistorial.Size = new System.Drawing.Size(104, 40);
             this.btnVerHistorial.TabIndex = 12;
             this.btnVerHistorial.Text = "Ver Historial";
             this.btnVerHistorial.UseVisualStyleBackColor = true;
@@ -64,7 +64,7 @@ namespace BuscaMinasDesktop
             this.dgvTablero.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvTablero.Location = new System.Drawing.Point(12, 58);
             this.dgvTablero.Name = "dgvTablero";
-            this.dgvTablero.Size = new System.Drawing.Size(544, 497);
+            this.dgvTablero.Size = new System.Drawing.Size(826, 497);
             this.dgvTablero.TabIndex = 13;
             this.dgvTablero.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvTablero_CellMouseClick);
             // 
@@ -76,7 +76,7 @@ namespace BuscaMinasDesktop
             // 
             this.lbTiempo.AutoSize = true;
             this.lbTiempo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbTiempo.Location = new System.Drawing.Point(367, 19);
+            this.lbTiempo.Location = new System.Drawing.Point(548, 19);
             this.lbTiempo.Name = "lbTiempo";
             this.lbTiempo.Size = new System.Drawing.Size(0, 16);
             this.lbTiempo.TabIndex = 14;
@@ -94,7 +94,7 @@ namespace BuscaMinasDesktop
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(678, 567);
+            this.ClientSize = new System.Drawing.Size(850, 567);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lbTiempo);
             this.Controls.Add(this.dgvTablero);

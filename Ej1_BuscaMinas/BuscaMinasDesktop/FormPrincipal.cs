@@ -51,6 +51,12 @@ namespace BuscaMinasDesktop
                     columnas = 16;
                     minas = 40;
                 }
+                else if (fDato.cbNivel.SelectedIndex == 2)
+                {
+                    filas = 16;
+                    columnas = 30;
+                    minas = 99;
+                }
                 else 
                 {
                     filas = Convert.ToInt32(fDato.nudFilas.Value);
