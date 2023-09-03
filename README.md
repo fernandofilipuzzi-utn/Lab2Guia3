@@ -7,10 +7,13 @@ estado actual: me faltan cosas menores.
 <img src="https://github.com/fernandofilipuzzi-utn/Lab2Guia3/blob/main/Ej1_BuscaMinas/BuscaMinasClassLib/uml/Formulario.png"/>
 <br/>
 <img src="https://github.com/fernandofilipuzzi-utn/Lab2Guia3/blob/main/Ej1_BuscaMinas/BuscaMinasClassLib/uml/BuscaMinas.jpg"/>
-
+<br/>
 
 **Ejercicio 2: Batalla naval**<br/>
+<br/>
+<img src="https://github.com/fernandofilipuzzi-utn/Lab2Guia3/blob/main/batallanaval_simplificado_demo/pantallazo.png"/>
 
+<br/>
 **Ejercicio 3: Juego de la vida (coway)**<br/>
 
 Video que lo muestra implementado en una aplicación de línea de comandos ( laboratorio 1- 2022):<br/>
