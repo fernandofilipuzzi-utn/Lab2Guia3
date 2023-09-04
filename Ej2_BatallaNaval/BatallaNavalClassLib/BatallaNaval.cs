@@ -6,76 +6,37 @@ namespace BatallaNavalClassLib
 {
     public class BatallaNaval
     {
-        ArrayList jugadores = new ArrayList();
-        ArrayList elementos = new ArrayList();
+        Jugador jugador1;
+        Jugador jugador2;
 
-        public int CantidadJugadores { get{ return jugadores.Count; } }
-        public int CantidadElementos { get { return elementos.Count; } }
+        Celda[,] mar;
 
-        public BatallaNaval(int cantJugadores) : this("Máquina 1", cantJugadores)
+        public Celda this[int fila, int columna]
         {
-        }
-
-        public BatallaNaval(string Nombre, int cantJugadores)
-        {
-            jugadores.Add(new Jugador(Nombre));
-
-            for (int n = 2; n <= cantJugadores; n++)
+            get
             {
-                jugadores.Add(new Jugador("Máquina " + n));
-            }
-
-            for (int n = 1; n <= 7; n++)
-            {
-                elementos.Add(new Embarcacion(Embarcacion.TipoElemento.Escalera));
-                elementos.Add(new Embarcacion(Embarcacion.TipoElemento.Serpiente));
+                Celda celda = null;
+                if(mar!=null)
+                    celda= mar[fila, columna];
+                return celda;
             }
         }
 
-        public void Jugar()
-        {
-            foreach (Jugador jugador in jugadores)
-            {
-                jugador.Mover();
+        public int CantFilas;
+        public int CantColumnas;
 
-                foreach (Embarcacion elemento in elementos)
+        public BatallaNaval(string nombre, int CantFilas, int CantColumnas)
+        {
+            mar = new Celda[CantFilas, CantColumnas];
+            for (int n = 0; n < CantFilas; n++)
+            {
+                for (int m = 0; m < CantFilas; m++)
                 {
-                    elemento.Evaluar(jugador);
+                    mar[n, m] = new Celda();
                 }
             }
         }
 
-        public Jugador VerJugador(int idx)
-        {
-            Jugador jug = null;
-            if (idx >= 0 && idx < CantidadJugadores)
-            {
-                jug=(Jugador)jugadores[idx];
-            }
-            return jug;
-        }
-
-        public Embarcacion VerElemento(int idx)
-        {
-            Embarcacion elem = null;
-            if (idx >= 0 && idx < CantidadElementos)
-            {
-                elem = (Embarcacion)elementos[idx];
-            }
-            return elem;
-        }
-              
-        public bool HaFinalizado()
-        {
-            bool haFinalizado=false;
-            foreach (Jugador jugador in jugadores)
-            {
-                if (jugador.HaLLegado==true)
-                {
-                    haFinalizado |= true;
-                }
-            }
-            return haFinalizado;
-        }
+       
     }
 }
