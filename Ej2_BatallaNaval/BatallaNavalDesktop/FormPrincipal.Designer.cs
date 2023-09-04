@@ -33,11 +33,8 @@ namespace BatallaNavalDesktop
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPrincipal));
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.btnNuevo = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.btnJugar = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // imageList1
@@ -57,24 +54,6 @@ namespace BatallaNavalDesktop
             this.btnNuevo.Text = "Nuevo";
             this.btnNuevo.UseVisualStyleBackColor = true;
             this.btnNuevo.Click += new System.EventHandler(this.btnNuevo_Click);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.listBox1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(509, 424);
-            this.groupBox1.TabIndex = 10;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Resultados";
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(6, 12);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(497, 407);
-            this.listBox1.TabIndex = 0;
             // 
             // btnJugar
             // 
@@ -104,13 +83,11 @@ namespace BatallaNavalDesktop
             this.ClientSize = new System.Drawing.Size(654, 440);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnJugar);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnNuevo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "FormPrincipal";
             this.Text = "Escaleras y Serpientes";
-            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -118,8 +95,6 @@ namespace BatallaNavalDesktop
         #endregion
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Button btnNuevo;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button btnJugar;
         private System.Windows.Forms.Button button1;
     }

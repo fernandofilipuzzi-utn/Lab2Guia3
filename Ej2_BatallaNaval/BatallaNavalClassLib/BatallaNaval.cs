@@ -4,7 +4,7 @@ using System.Collections;
 namespace BatallaNavalClassLib
 
 {
-    public class EscalerasYSerpientes
+    public class BatallaNaval
     {
         ArrayList jugadores = new ArrayList();
         ArrayList elementos = new ArrayList();
@@ -12,11 +12,11 @@ namespace BatallaNavalClassLib
         public int CantidadJugadores { get{ return jugadores.Count; } }
         public int CantidadElementos { get { return elementos.Count; } }
 
-        public EscalerasYSerpientes(int cantJugadores) : this("Máquina 1", cantJugadores)
+        public BatallaNaval(int cantJugadores) : this("Máquina 1", cantJugadores)
         {
         }
 
-        public EscalerasYSerpientes(string Nombre, int cantJugadores)
+        public BatallaNaval(string Nombre, int cantJugadores)
         {
             jugadores.Add(new Jugador(Nombre));
 
@@ -27,8 +27,8 @@ namespace BatallaNavalClassLib
 
             for (int n = 1; n <= 7; n++)
             {
-                elementos.Add(new Elemento(Elemento.TipoElemento.Escalera));
-                elementos.Add(new Elemento(Elemento.TipoElemento.Serpiente));
+                elementos.Add(new Embarcacion(Embarcacion.TipoElemento.Escalera));
+                elementos.Add(new Embarcacion(Embarcacion.TipoElemento.Serpiente));
             }
         }
 
@@ -38,7 +38,7 @@ namespace BatallaNavalClassLib
             {
                 jugador.Mover();
 
-                foreach (Elemento elemento in elementos)
+                foreach (Embarcacion elemento in elementos)
                 {
                     elemento.Evaluar(jugador);
                 }
@@ -55,12 +55,12 @@ namespace BatallaNavalClassLib
             return jug;
         }
 
-        public Elemento VerElemento(int idx)
+        public Embarcacion VerElemento(int idx)
         {
-            Elemento elem = null;
+            Embarcacion elem = null;
             if (idx >= 0 && idx < CantidadElementos)
             {
-                elem = (Elemento)elementos[idx];
+                elem = (Embarcacion)elementos[idx];
             }
             return elem;
         }

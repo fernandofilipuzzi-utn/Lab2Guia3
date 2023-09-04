@@ -18,7 +18,7 @@ namespace BatallaNavalDesktop
     public partial class FormPrincipal : Form
 
     {
-        EscalerasYSerpientes nuevo;
+        BatallaNaval nuevo;
 
         ArrayList partidas = new ArrayList();
      
@@ -38,11 +38,11 @@ namespace BatallaNavalDesktop
                 string jugador = fDato.tbNombre.Text;
                 int cantidad = Convert.ToInt32( fDato.nudCantidad.Value);
 
-                nuevo = new EscalerasYSerpientes(jugador, cantidad);
+                nuevo = new BatallaNaval(jugador, cantidad);
 
                 for (int m = 0; m < nuevo.CantidadElementos; m++)
                 {
-                    Elemento elemento = nuevo.VerElemento(m);
+                    Embarcacion elemento = nuevo.VerElemento(m);
                     string linea = $"   {elemento.VerDescripcion()} ";
 
                     listBox1.Items.Add(linea);
@@ -74,7 +74,7 @@ namespace BatallaNavalDesktop
                     #region pintando las escaleras y los bichos que lo mordieron
                     for (int m = 0; m < jugador.VerCantidadQuienes; m++)
                     {
-                        Elemento quien = jugador.VerPorQuien(m);
+                        Embarcacion quien = jugador.VerPorQuien(m);
                         linea = $"   Afectado por: {quien.VerDescripcion()} ";
 
                         listBox1.Items.Add(linea);

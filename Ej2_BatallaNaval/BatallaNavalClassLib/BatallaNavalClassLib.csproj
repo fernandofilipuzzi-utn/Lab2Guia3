@@ -41,17 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Elemento.cs" />
-    <Compile Include="EscalerasYSerpientes.cs" />
+    <Compile Include="Celda.cs" />
+    <Compile Include="Embarcacion.cs" />
+    <Compile Include="BatallaNaval.cs" />
     <Compile Include="Jugador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="uml\EscalerasYSerpientes.uml" />
+    <None Include="uml\BatallaNaval.uml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="uml\EscalerasYSerpientes.jpg" />
-    <Content Include="uml\EyS_diagrama_secuencia.jpg" />
+    <Content Include="uml\BatallaNaval.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
