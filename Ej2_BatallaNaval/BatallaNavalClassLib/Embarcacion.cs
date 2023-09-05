@@ -8,23 +8,33 @@ namespace BatallaNavalClassLib
 {
     public class Embarcacion
     {
-        List<Celda> celdas = new List<Celda>();
-       
-        public int Tamaño { get; private set; }
+        public enum TipoEmbarcacion { Lancha = 1, Crucero, Submarino, Buque, Portaaviones }
 
-        public Embarcacion(int tamaño)
+        List<Celda> celdas = new List<Celda>();
+
+        public Celda this[int n]
         {
-            Tamaño = tamaño;
+            get
+            {
+                return celdas[n];
+            }
+        }
+        public TipoEmbarcacion Tipo { get; private set; }
+
+        public Embarcacion(TipoEmbarcacion tipo)
+        {
+            this.Tipo = tipo;
         }
 
-        public bool FueHundido
+        public bool FueHundido 
         {
-            get {
-                bool fueHundido=true;
+            get 
+            {
+                bool fueHundido = true;
                 int n = 0;
-                while (n<celdas.Count && fueHundido)
+                while (n < celdas.Count && fueHundido)
                 {
-                    fueHundido |= celdas[n].Acierto == Jugador.TipoAcierto.Impacto;
+                    fueHundido |= celdas[n].HuboImpacto;
                     n++;
                 }
                 return fueHundido;
@@ -39,8 +49,5 @@ namespace BatallaNavalClassLib
 
             return esContigua;
         }
-
-
-
     }
 }

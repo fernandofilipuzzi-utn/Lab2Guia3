@@ -18,7 +18,7 @@ namespace BatallaNavalDesktop
     public partial class FormPrincipal : Form
 
     {
-        BatallaNaval nuevo;
+        BatallaNaval juego;
 
         ArrayList partidas = new ArrayList();
      
@@ -33,71 +33,19 @@ namespace BatallaNavalDesktop
 
             if (fDato.ShowDialog() == DialogResult.OK)
             {
-                listBox1.Items.Clear();
+                
+                string nombreJugador = fDato.tbNombre.Text;
 
-                string jugador = fDato.tbNombre.Text;
-                int cantidad = Convert.ToInt32( fDato.nudCantidad.Value);
+                juego = new BatallaNaval(nombreJugador,20,10);
 
-                nuevo = new BatallaNaval(jugador, cantidad);
+                IniciarTablero(dgvTableroJ1);
+                IniciarTablero(dgvTableroJ2);
 
-                for (int m = 0; m < nuevo.CantidadElementos; m++)
-                {
-                    Embarcacion elemento = nuevo.VerElemento(m);
-                    string linea = $"   {elemento.VerDescripcion()} ";
-
-                    listBox1.Items.Add(linea);
-                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                }
-
-                listBox1.Items.Add("---");
-
-                btnJugar.Enabled = true;
+                btnNuevo.Enabled = false;
             }            
         }
 
-        private void btnJugar_Click(object sender, EventArgs e)
-        {
-            if (nuevo.HaFinalizado() == false)
-            {
-                nuevo.Jugar();
-
-                for (int n = 0; n < nuevo.CantidadJugadores; n++)
-                {
-                    Jugador jugador = nuevo.VerJugador(n);
-
-                    string linea = $">{jugador.Nombre} se movió desde la posición: {jugador.PosicionAnterior}" +
-                                    $"a la posición {jugador.PosicionActual} ({jugador.Avance})";
-
-                    listBox1.Items.Add(linea);
-                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
-
-                    #region pintando las escaleras y los bichos que lo mordieron
-                    for (int m = 0; m < jugador.VerCantidadQuienes; m++)
-                    {
-                        Embarcacion quien = jugador.VerPorQuien(m);
-                        linea = $"   Afectado por: {quien.VerDescripcion()} ";
-
-                        listBox1.Items.Add(linea);
-                        listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                    }
-                    #endregion
-                }
-
-                listBox1.Items.Add("------");
-            }
-            else
-            {
-                MessageBox.Show("Finalizó!");
-               
-                for (int n = 0; n < nuevo.CantidadJugadores; n++)
-                {
-                    Jugador jug = (Jugador)(nuevo.VerJugador(n));
-                    if (jug.HaLLegado)
-                        AgregarPartida(jug.Nombre);
-                }
-            }
-        }
-
+       
         private void btnListarHistorial_Click(object sender, EventArgs e)
         {
             FormHistorial fHistorial = new FormHistorial();
@@ -150,6 +98,107 @@ namespace BatallaNavalDesktop
             else
                 partidas.Add(new Partida(nombre, 1));
             #endregion
+        }
+              
+
+        private void dgvTableroJ2_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            int fila = e.RowIndex;
+            int columna=e.ColumnIndex;
+
+            if (e.Button == MouseButtons.Left)
+            {
+                juego.Jugar(fila, columna);
+            }
+            
+        }
+
+        Embarcacion nueva;
+        private void dgvTableroJ1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            int fila = e.RowIndex;
+            int columna = e.ColumnIndex;
+
+
+            string tipo = comboBox1.SelectedItem as string;
+            Embarcacion.TipoEmbarcacion tipoBarco=0;
+            if (tipo == "Lancha")
+            {
+                tipoBarco = Embarcacion.TipoEmbarcacion.Lancha;
+            }
+            //faltan los otros
+
+            if (e.Button == MouseButtons.Left)
+            {
+                //logica de ubicación de las Embarcaciones sin que queden contiguas 
+                if (nueva==null)
+                {
+                    nueva = new Embarcacion(tipoBarco);
+                }
+                if (juego.Jugador1.HayCeldaOcupadasContiguas(fila, columna) == false)
+                {
+                    nueva.AgregarCelda(juego.Jugador1[fila, columna]);
+                }
+                else
+                {
+                    MessageBox.Show("no no!");
+                }
+
+                //falta verificar largo
+
+                juego.Jugador1.AgregarEmbarcacion(nueva);
+                nueva = null;
+                comboBox1.Items.Remove(tipo);
+                comboBox1.SelectedIndex = -1;
+            }
+
+            PintarTableroJ1();
+        }
+
+        public void IniciarTablero(DataGridView dgv)
+        {
+            dgv.ColumnHeadersVisible = false;
+            dgv.RowHeadersVisible = false;
+            dgv.ScrollBars = ScrollBars.None;
+            dgv.BackgroundColor = Color.Gray;
+
+            dgv.RowCount = juego.CantFilas;
+            dgv.ColumnCount = juego.CantColumnas;
+
+            for (int m = 0; m < dgv.RowCount; m++)
+            {
+                dgv.Rows[m].Height = (dgvTableroJ1.ClientSize.Height) / dgvTableroJ1.RowCount;
+                dgv.Rows[m].Resizable = DataGridViewTriState.False;
+
+                for (int n = 0; n < dgvTableroJ1.ColumnCount; n++)
+                {
+                    dgv.Columns[n].Width = (dgvTableroJ1.ClientSize.Width) / dgvTableroJ1.ColumnCount;
+                    dgv.Columns[n].Resizable = DataGridViewTriState.False;
+
+                    dgv[n, m].Style.Font = new Font("Courier New", 12);
+                    dgv[n, m].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    dgv[n, m].Style.BackColor = Color.Gray;
+                }
+            }
+
+            dgv.Enabled = true;
+
+            PintarTableroJ1();
+        }
+
+        public void PintarTableroJ1()
+        {
+            for (int m = 0; m < dgvTableroJ1.RowCount; m++)
+            {
+                for (int n = 0; n < dgvTableroJ1.ColumnCount; n++)
+                {
+                    Celda c = juego.Jugador1[m, n];
+                    if (c.Embarcacion!=null)
+                    {
+                        dgvTableroJ1[n, m].Value = "X";
+                    }
+                }
+            }
         }
     }
 }

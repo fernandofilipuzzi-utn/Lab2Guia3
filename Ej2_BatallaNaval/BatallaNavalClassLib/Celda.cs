@@ -8,8 +8,19 @@ namespace BatallaNavalClassLib
 {
     public class Celda
     {
-        public Jugador.TipoAcierto Acierto { get; private set; }
         public bool EstaOculta { get; private set; }
-        public Embarcacion EstaOcupada { get; private set; }
+        public Embarcacion Embarcacion{ get; set; }
+        public bool HuboImpacto 
+        {
+            get 
+            {
+                return Embarcacion!=null && EstaOculta==false;
+            }
+        }
+
+        public void MarcarCelda()
+        {
+            EstaOculta = false;
+        }
     }
 }

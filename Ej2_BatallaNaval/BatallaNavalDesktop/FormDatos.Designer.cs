@@ -33,9 +33,6 @@ namespace BatallaNavalDesktop
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.nudCantidad = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCantidad)).BeginInit();
             this.SuspendLayout();
             // 
             // tbNombre
@@ -76,42 +73,17 @@ namespace BatallaNavalDesktop
             this.label1.TabIndex = 3;
             this.label1.Text = "Nombre";
             // 
-            // nudCantidad
-            // 
-            this.nudCantidad.Location = new System.Drawing.Point(141, 51);
-            this.nudCantidad.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.nudCantidad.Name = "nudCantidad";
-            this.nudCantidad.Size = new System.Drawing.Size(120, 20);
-            this.nudCantidad.TabIndex = 4;
-            this.nudCantidad.ValueChanged += new System.EventHandler(this.nudCantidad_ValueChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(51, 58);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(49, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Cantidad";
-            // 
             // FormDatos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(333, 154);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.nudCantidad);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.tbNombre);
             this.Name = "FormDatos";
             this.Text = "FormDatos";
-            ((System.ComponentModel.ISupportInitialize)(this.nudCantidad)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -122,7 +94,5 @@ namespace BatallaNavalDesktop
         private System.Windows.Forms.Button button2;
         public System.Windows.Forms.TextBox tbNombre;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        public System.Windows.Forms.NumericUpDown nudCantidad;
     }
 }

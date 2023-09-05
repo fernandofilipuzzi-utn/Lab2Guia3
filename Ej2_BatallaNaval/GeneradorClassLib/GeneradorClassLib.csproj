@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{49411D09-4AF5-46A6-B7F6-A14E2AEAEB8D}</ProjectGuid>
+    <ProjectGuid>{A7697F80-C2D3-44D6-BDC6-AE59F9466C69}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BatallaNavalClassLib</RootNamespace>
-    <AssemblyName>BatallaNavalClassLib</AssemblyName>
+    <RootNamespace>GeneradorClassLib</RootNamespace>
+    <AssemblyName>GeneradorClassLib</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,23 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Celda.cs" />
-    <Compile Include="Embarcacion.cs" />
-    <Compile Include="BatallaNaval.cs" />
-    <Compile Include="Jugador.cs" />
+    <Compile Include="Generador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="uml\BatallaNaval.uml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="uml\BatallaNaval.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GeneradorClassLib\GeneradorClassLib.csproj">
-      <Project>{a7697f80-c2d3-44d6-bdc6-ae59f9466c69}</Project>
-      <Name>GeneradorClassLib</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

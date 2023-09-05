@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BatallaNavalDesktop", "Bata
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BatallaNavalClassLib", "BatallaNavalClassLib\BatallaNavalClassLib.csproj", "{49411D09-4AF5-46A6-B7F6-A14E2AEAEB8D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneradorClassLib", "GeneradorClassLib\GeneradorClassLib.csproj", "{A7697F80-C2D3-44D6-BDC6-AE59F9466C69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{49411D09-4AF5-46A6-B7F6-A14E2AEAEB8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49411D09-4AF5-46A6-B7F6-A14E2AEAEB8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49411D09-4AF5-46A6-B7F6-A14E2AEAEB8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7697F80-C2D3-44D6-BDC6-AE59F9466C69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7697F80-C2D3-44D6-BDC6-AE59F9466C69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7697F80-C2D3-44D6-BDC6-AE59F9466C69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7697F80-C2D3-44D6-BDC6-AE59F9466C69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

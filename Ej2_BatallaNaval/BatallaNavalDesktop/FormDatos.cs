@@ -27,12 +27,6 @@ namespace BatallaNavalDesktop
                 tbNombre.BackColor = Color.Orange;
             }
 
-            if (nudCantidad.Value == 0)
-            {
-                isNoOk |= true;
-                nudCantidad.BackColor = Color.Orange;
-            }
-
             if (isNoOk == false)
                 DialogResult = DialogResult.OK;
             else
@@ -44,9 +38,5 @@ namespace BatallaNavalDesktop
             tbNombre.BackColor = Color.White;
         }
 
-        private void nudCantidad_ValueChanged(object sender, EventArgs e)
-        {
-            nudCantidad.BackColor = Color.White;
-        }
     }
 }
