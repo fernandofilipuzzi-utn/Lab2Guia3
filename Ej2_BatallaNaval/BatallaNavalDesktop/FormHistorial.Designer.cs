@@ -33,11 +33,11 @@ namespace BatallaNavalDesktop
             this.btnAceptar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // listBox1
+            // lbMensajes
             // 
             this.lbResultados.FormattingEnabled = true;
             this.lbResultados.Location = new System.Drawing.Point(2, 12);
-            this.lbResultados.Name = "listBox1";
+            this.lbResultados.Name = "lbMensajes";
             this.lbResultados.Size = new System.Drawing.Size(167, 329);
             this.lbResultados.TabIndex = 1;
             // 

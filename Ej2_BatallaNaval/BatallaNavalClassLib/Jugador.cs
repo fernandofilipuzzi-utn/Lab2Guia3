@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.Collections;
+using GeneradorClassLib;
 
 namespace BatallaNavalClassLib
 {
@@ -28,15 +29,29 @@ namespace BatallaNavalClassLib
             get
             {
                 Celda celda = null;
-                if (mar != null)
+                if (mar != null && fila>=0 && fila < mar.GetLength(0)  && columna>=0 && columna< mar.GetLength(1))
                     celda = mar[fila, columna];
                 return celda;
             }
         }
 
+        public void AutoInicializar()
+        {
+            Generador ubicaciones = new Generador(mar.GetLength(0), mar.GetLength(1));
+
+            int fila, columna;
+            ubicaciones.Extraer(out fila, out columna);
+
+            Embarcacion lancha = new Embarcacion(Embarcacion.TipoEmbarcacion.Lancha);
+            lancha.AgregarCelda(this[fila, columna]);
+
+            //completar inicialización!
+        }
+
         public void Marcar(int fila, int columna)
         {
-            this[fila, columna].MarcarCelda();
+            if(this[fila, columna]!=null)
+                this[fila, columna].MarcarCelda();
         }
 
         /// <summary>

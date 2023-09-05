@@ -44,10 +44,22 @@ namespace BatallaNavalClassLib
         public bool AgregarCelda(Celda celda)
         {
             bool esContigua = true;
+
             if(esContigua)
                 celdas.Add(celda);
 
+            //verificar que esten alineadas 
+
+            //verificar que sean contiguas
+
+            //eliminar las que no cumplen
+
             return esContigua;
+        }
+
+        public bool FueUbicada()
+        {
+            return (int)Tipo>0 && celdas.Count == (int)Tipo;
         }
     }
 }

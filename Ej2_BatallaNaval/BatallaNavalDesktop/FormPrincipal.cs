@@ -38,14 +38,21 @@ namespace BatallaNavalDesktop
 
                 juego = new BatallaNaval(nombreJugador,20,10);
 
-                IniciarTablero(dgvTableroJ1);
-                IniciarTablero(dgvTableroJ2);
+                IniciarTablero(dgvTableroJ1, lbNombreJ1, juego.Jugador1);
+                IniciarTablero(dgvTableroJ2, lbNombreJ2, juego.Jugador2);
+
+                lbMensajes.Items.Clear();
+                lbMensajes.Items.Add("Seleccione y ubique los barcos en su tablero.");
+
+                cbTipoEmbarcacion.Enabled = true;
+                dgvTableroJ1.Enabled = true;
+
+               
 
                 btnNuevo.Enabled = false;
             }            
         }
-
-       
+               
         private void btnListarHistorial_Click(object sender, EventArgs e)
         {
             FormHistorial fHistorial = new FormHistorial();
@@ -98,8 +105,7 @@ namespace BatallaNavalDesktop
             else
                 partidas.Add(new Partida(nombre, 1));
             #endregion
-        }
-              
+        }              
 
         private void dgvTableroJ2_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -119,22 +125,40 @@ namespace BatallaNavalDesktop
             int fila = e.RowIndex;
             int columna = e.ColumnIndex;
 
-
-            string tipo = comboBox1.SelectedItem as string;
+            #region selección tipo de embarcación
+            string tipo = cbTipoEmbarcacion.SelectedItem as string;
             Embarcacion.TipoEmbarcacion tipoBarco=0;
-            if (tipo == "Lancha")
+            if (tipo == Embarcacion.TipoEmbarcacion.Lancha.ToString())
             {
                 tipoBarco = Embarcacion.TipoEmbarcacion.Lancha;
             }
-            //faltan los otros
+            else if (tipo == Embarcacion.TipoEmbarcacion.Crucero.ToString())
+            {
+                tipoBarco = Embarcacion.TipoEmbarcacion.Crucero;
+            }
+            else if (tipo == Embarcacion.TipoEmbarcacion.Submarino.ToString())
+            {
+                tipoBarco = Embarcacion.TipoEmbarcacion.Submarino;
+            }
+            else if (tipo == Embarcacion.TipoEmbarcacion.Buque.ToString())
+            {
+                tipoBarco = Embarcacion.TipoEmbarcacion.Buque;
+            }
+            else if (tipo == Embarcacion.TipoEmbarcacion.Portaaviones.ToString())
+            {
+                tipoBarco = Embarcacion.TipoEmbarcacion.Portaaviones;
+            }
+            #endregion
 
             if (e.Button == MouseButtons.Left)
             {
                 //logica de ubicación de las Embarcaciones sin que queden contiguas 
+
                 if (nueva==null)
                 {
                     nueva = new Embarcacion(tipoBarco);
                 }
+
                 if (juego.Jugador1.HayCeldaOcupadasContiguas(fila, columna) == false)
                 {
                     nueva.AgregarCelda(juego.Jugador1[fila, columna]);
@@ -144,18 +168,38 @@ namespace BatallaNavalDesktop
                     MessageBox.Show("no no!");
                 }
 
-                //falta verificar largo
-
-                juego.Jugador1.AgregarEmbarcacion(nueva);
-                nueva = null;
-                comboBox1.Items.Remove(tipo);
-                comboBox1.SelectedIndex = -1;
+                if (nueva.FueUbicada() == true)
+                {
+                    juego.Jugador1.AgregarEmbarcacion(nueva);
+                    nueva = null;
+                    cbTipoEmbarcacion.Items.Remove(tipo);
+                    cbTipoEmbarcacion.SelectedIndex = -1;
+                    cbTipoEmbarcacion.Text = "";
+                }
             }
 
-            PintarTableroJ1();
+            PintarTablero(dgvTableroJ1, juego.Jugador1);
+
+            if (cbTipoEmbarcacion.Items.Count == 0)
+            {
+
+                //inicializar jugador 2
+                juego.Jugador2.AutoInicializar();
+                PintarTablero(dgvTableroJ2, juego.Jugador2);
+
+                //comienza el juego
+
+                cbTipoEmbarcacion.Enabled = false;
+                dgvTableroJ1.Enabled = false;
+
+                dgvTableroJ2.Enabled = true;
+
+                lbMensajes.Items.Clear();
+                lbMensajes.Items.Add("Dispare! en el tablero de su oponente");
+            }
         }
 
-        public void IniciarTablero(DataGridView dgv)
+        public void IniciarTablero(DataGridView dgv, Label lbNombreJug, Jugador jug)
         {
             dgv.ColumnHeadersVisible = false;
             dgv.RowHeadersVisible = false;
@@ -183,19 +227,22 @@ namespace BatallaNavalDesktop
 
             dgv.Enabled = true;
 
-            PintarTableroJ1();
+            lbNombreJug.Text = jug.Nombre;
+
+            PintarTablero(dgv,jug);
         }
 
-        public void PintarTableroJ1()
+        public void PintarTablero(DataGridView dgv, Jugador jug)
         {
-            for (int m = 0; m < dgvTableroJ1.RowCount; m++)
+            
+            for (int m = 0; m < dgv.RowCount; m++)
             {
                 for (int n = 0; n < dgvTableroJ1.ColumnCount; n++)
                 {
-                    Celda c = juego.Jugador1[m, n];
-                    if (c.Embarcacion!=null)
+                    Celda c = jug[m, n];
+                    if (c.Embarcacion != null)
                     {
-                        dgvTableroJ1[n, m].Value = "X";
+                        dgv[n, m].Value = "X";
                     }
                 }
             }

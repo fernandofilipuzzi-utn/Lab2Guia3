@@ -64,11 +64,11 @@ namespace BatallaNavalDesktop
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
-            // label1
+            // lbNombreJ1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(48, 29);
-            this.label1.Name = "label1";
+            this.label1.Name = "lbNombreJ1";
             this.label1.Size = new System.Drawing.Size(44, 13);
             this.label1.TabIndex = 3;
             this.label1.Text = "Nombre";
