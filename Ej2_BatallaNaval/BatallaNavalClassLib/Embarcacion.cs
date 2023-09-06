@@ -12,6 +12,8 @@ namespace BatallaNavalClassLib
 
         List<Celda> celdas = new List<Celda>();
 
+        public int Longitud { get { return celdas.Count; } }
+
         public Celda this[int n]
         {
             get
@@ -43,16 +45,50 @@ namespace BatallaNavalClassLib
 
         public bool AgregarCelda(Celda celda)
         {
-            bool esContigua = true;
-
-            if(esContigua)
-                celdas.Add(celda);
+            bool esContigua = false;
+            bool esAlineada = false;
+            bool estaYaIncluida = false;
 
             //verificar que esten alineadas 
+            if (celdas.Count < 2)
+            {
+                esAlineada = true;
+            }
+            else 
+            {               
+                esAlineada |= (celdas[celdas.Count - 1].Columna == celdas[celdas.Count - 2].Columna) &&
+                                     (celda.Columna == celdas[celdas.Count - 1].Columna);
+
+                esAlineada |= (celdas[celdas.Count - 1].Fila == celdas[celdas.Count - 2].Fila) &&
+                                        (celda.Fila == celdas[celdas.Count - 1].Fila);
+            }
 
             //verificar que sean contiguas
+            if (celdas.Count < 1)
+            {
+                esContigua = true;
+            }
+            else
+            {
+                Celda last = celdas.Last();
+                Celda first = celdas.First();
+
+                esContigua = Math.Abs(first.Columna - celda.Columna) == 1 ||
+                                Math.Abs(last.Columna - celda.Columna) == 1 ||
+                                Math.Abs(first.Fila - celda.Fila) == 1 ||
+                                Math.Abs(last.Fila - celda.Fila) == 1;
+            }
 
             //eliminar las que no cumplen
+            for (int n = 0; n < celdas.Count; n++)
+            {
+                estaYaIncluida &= celdas[n] == celda;
+            }
+
+            if (esContigua && esAlineada && estaYaIncluida==false)
+            {
+                celdas.Add(celda);
+            }
 
             return esContigua;
         }

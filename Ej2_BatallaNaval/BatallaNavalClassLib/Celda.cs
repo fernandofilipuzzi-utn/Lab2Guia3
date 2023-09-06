@@ -8,19 +8,31 @@ namespace BatallaNavalClassLib
 {
     public class Celda
     {
-        public bool EstaOculta { get; private set; }
+        public bool EstaOculta { get; set; }
         public Embarcacion Embarcacion{ get; set; }
+        public int Fila { get; set; }
+        public int Columna { get; set; }
+        
+        public bool HuboDisparo { get; set; }
+
         public bool HuboImpacto 
         {
             get 
             {
-                return Embarcacion!=null && EstaOculta==false;
+                return Embarcacion!=null && HuboDisparo == true && Embarcacion.FueUbicada();
             }
         }
 
         public void MarcarCelda()
         {
             EstaOculta = false;
+            HuboDisparo = true;
+        }
+
+        public override bool Equals(object obj)
+        {
+            Celda otro = obj as Celda;
+            return otro != null && otro.Fila == Fila && otro.Columna == Columna;
         }
     }
 }

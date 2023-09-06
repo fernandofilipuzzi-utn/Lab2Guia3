@@ -33,7 +33,6 @@ namespace BatallaNavalDesktop
 
             if (fDato.ShowDialog() == DialogResult.OK)
             {
-                
                 string nombreJugador = fDato.tbNombre.Text;
 
                 juego = new BatallaNaval(nombreJugador,20,10);
@@ -45,9 +44,7 @@ namespace BatallaNavalDesktop
                 lbMensajes.Items.Add("Seleccione y ubique los barcos en su tablero.");
 
                 cbTipoEmbarcacion.Enabled = true;
-                dgvTableroJ1.Enabled = true;
-
-               
+                dgvTableroJ1.Enabled = true;                 
 
                 btnNuevo.Enabled = false;
             }            
@@ -58,7 +55,7 @@ namespace BatallaNavalDesktop
             FormHistorial fHistorial = new FormHistorial();
 
             foreach (Partida p in ListarPartidasOrdenadas())
-                fHistorial.lbResultados.Items.Add($"{ p.Ganador}  {p.Ganadas}");
+                fHistorial.lbResultados.Items.Add($"{p.Ganador}  {p.Ganadas}");
 
             fHistorial.ShowDialog();
 
@@ -116,7 +113,9 @@ namespace BatallaNavalDesktop
             {
                 juego.Jugar(fila, columna);
             }
-            
+
+            PintarTablero(dgvTableroJ1, juego.Jugador1);
+            PintarTablero(dgvTableroJ2, juego.Jugador2);
         }
 
         Embarcacion nueva;
@@ -147,6 +146,10 @@ namespace BatallaNavalDesktop
             else if (tipo == Embarcacion.TipoEmbarcacion.Portaaviones.ToString())
             {
                 tipoBarco = Embarcacion.TipoEmbarcacion.Portaaviones;
+            }
+            else
+            {
+                return;
             }
             #endregion
 
@@ -180,9 +183,17 @@ namespace BatallaNavalDesktop
 
             PintarTablero(dgvTableroJ1, juego.Jugador1);
 
+            if (nueva!=null && nueva.FueUbicada() == false)
+            {
+                for (int n = 0; n < nueva.Longitud; n++)
+                {
+                    Celda celda = nueva[n];
+                    dgvTableroJ1[celda.Columna, celda.Fila].Value = "x";
+                }
+            }
+
             if (cbTipoEmbarcacion.Items.Count == 0)
             {
-
                 //inicializar jugador 2
                 juego.Jugador2.AutoInicializar();
                 PintarTablero(dgvTableroJ2, juego.Jugador2);
@@ -211,12 +222,12 @@ namespace BatallaNavalDesktop
 
             for (int m = 0; m < dgv.RowCount; m++)
             {
-                dgv.Rows[m].Height = (dgvTableroJ1.ClientSize.Height) / dgvTableroJ1.RowCount;
+                dgv.Rows[m].Height = (dgvTableroJ1.ClientSize.Height)/dgvTableroJ1.RowCount;
                 dgv.Rows[m].Resizable = DataGridViewTriState.False;
 
                 for (int n = 0; n < dgvTableroJ1.ColumnCount; n++)
                 {
-                    dgv.Columns[n].Width = (dgvTableroJ1.ClientSize.Width) / dgvTableroJ1.ColumnCount;
+                    dgv.Columns[n].Width = (dgvTableroJ1.ClientSize.Width)/dgvTableroJ1.ColumnCount;
                     dgv.Columns[n].Resizable = DataGridViewTriState.False;
 
                     dgv[n, m].Style.Font = new Font("Courier New", 12);
@@ -224,7 +235,6 @@ namespace BatallaNavalDesktop
                     dgv[n, m].Style.BackColor = Color.Gray;
                 }
             }
-
             dgv.Enabled = true;
 
             lbNombreJug.Text = jug.Nombre;
@@ -234,15 +244,28 @@ namespace BatallaNavalDesktop
 
         public void PintarTablero(DataGridView dgv, Jugador jug)
         {
-            
             for (int m = 0; m < dgv.RowCount; m++)
             {
-                for (int n = 0; n < dgvTableroJ1.ColumnCount; n++)
+                for (int n = 0; n < dgv.ColumnCount; n++)
                 {
                     Celda c = jug[m, n];
-                    if (c.Embarcacion != null)
+
+                    if (c.EstaOculta == false)
                     {
-                        dgv[n, m].Value = "X";
+                        if(c.Embarcacion!=null)
+                            dgv[n, m].Value = "█";
+
+                        if (c.HuboImpacto)
+                            dgv[n, m].Value = "X";
+                        else if (c.HuboDisparo)
+                            dgv[n, m].Value = "o";
+                    }
+                    else
+                    {
+                        if (c.HuboImpacto)
+                            dgv[n, m].Value = "X";
+                        else if (c.HuboDisparo)
+                            dgv[n, m].Value = "X";
                     }
                 }
             }

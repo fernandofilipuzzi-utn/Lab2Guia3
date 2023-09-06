@@ -22,12 +22,12 @@ namespace BatallaNavalClassLib
             this.CantColumnas = CantColumnas;
 
             #region factoria jugador 1
-            Celda [, ]mar = new Celda[CantFilas, CantColumnas];
+            Celda [, ] mar = new Celda[CantFilas, CantColumnas];
             for (int m = 0; m< CantFilas; m++)
             {
                 for (int n = 0; n < CantColumnas; n++)
                 {
-                    mar[m, n] = new Celda();
+                    mar[m, n] = new Celda() { Fila = m, Columna = n, EstaOculta = false };
                 }
             }
             Jugador1 = new Jugador(nombre, mar);
@@ -39,7 +39,7 @@ namespace BatallaNavalClassLib
             {
                 for (int n = 0; n < CantColumnas; n++)
                 {
-                    mar[m, n] = new Celda();
+                    mar[m, n] = new Celda() { Fila = m, Columna = n, EstaOculta = true };
                 }
             }
             Jugador2 = new Jugador("Máquina", mar);
@@ -48,14 +48,11 @@ namespace BatallaNavalClassLib
 
         public void Jugar(int fila, int columna)
         {
-            Jugador1[fila, columna].MarcarCelda();
-        }
-
-        public void Jugar()
-        {
-            int fila, columna;
-            generadorTiros.Extraer(out fila, out columna);
-            Jugar(fila, columna);
+            int fila1, columna1;
+            generadorTiros.Extraer(out fila1, out columna1);
+            Jugador1[fila1, columna1].MarcarCelda();
+            
+            Jugador2[fila, columna].MarcarCelda();
         }
 
         public bool Finalizado()
