@@ -15,7 +15,7 @@ namespace BatallaNavalClassLib
         public string Nombre { get; private set; }
 
         Celda[,] mar;
-
+        static Random azar = new Random();
         List<Embarcacion> embarcaciones = new List<Embarcacion>();
 
         public Jugador(string nombre, Celda[,] mar)
@@ -35,17 +35,50 @@ namespace BatallaNavalClassLib
             }
         }
 
-        public void AutoInicializar()
+        public void AutoInicializar(Embarcacion.TipoEmbarcacion[] modelosEmbarcaciones)
         {
             Generador ubicaciones = new Generador(mar.GetLength(0), mar.GetLength(1));
 
-            int fila, columna;
-            ubicaciones.Extraer(out fila, out columna);
+            Embarcacion nueva=null;
+            int n = 0;
+            int fila0 = 0, columna0 = 0;
+            while (n < modelosEmbarcaciones.Length )
+            {
+                bool esVertical = true;
 
-            Embarcacion lancha = new Embarcacion(Embarcacion.TipoEmbarcacion.Lancha);
-            lancha.AgregarCelda(this[fila, columna]);
+                if (nueva == null)
+                {
+                    nueva = new Embarcacion(modelosEmbarcaciones[n]);
+                    ubicaciones.Extraer(out fila0, out columna0);
+                }
 
-            //completar inicialización!
+                if (esVertical)
+                {
+                    if (this.HayCeldaOcupadasContiguas(fila0, columna0) == false)
+                    {
+                        if (nueva.AgregarCelda(this[fila0, columna0]))
+                        {
+                            ubicaciones.Descartar(fila0, columna0);
+                            fila0++;
+                        }
+                        else
+                        {
+                            nueva = null;
+                        }                        
+                    }
+                    else
+                    {
+                        nueva = null;
+                    }
+                }
+
+                if (nueva!=null && nueva.FueUbicada() == true)
+                {
+                    this.AgregarEmbarcacion(nueva);
+                    n++;
+                    nueva = null;                    
+                }
+            }
         }
 
         public void Marcar(int fila, int columna)

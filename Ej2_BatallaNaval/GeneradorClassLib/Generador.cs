@@ -34,8 +34,8 @@ namespace GeneradorClassLib
             fila = -1;
             columna = -1;
             int numero = -1;
-            
-            if (cantidad>0)
+
+            if (cantidad > 0)
             {
                 int nro = azar.Next(0, cantidad);
                 numero = numeros[nro];
@@ -46,6 +46,26 @@ namespace GeneradorClassLib
             }
 
             return numero;
+        }
+
+        public void Descartar(int fila,int columna)
+        {
+            int celda= fila * columnas + columna;
+
+            int idx = -1;
+            int n = 0;
+            while (n<cantidad && idx==-1)
+            {
+                if (celda == numeros[n])
+                    idx = n;
+                else
+                    n++;
+            }
+
+            if (idx > -1)
+            {
+                numeros[idx] = numeros[--cantidad];
+            }
         }
     }
 }

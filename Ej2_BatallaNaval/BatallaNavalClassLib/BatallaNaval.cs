@@ -2,10 +2,28 @@
 using GeneradorClassLib;
 using System.Collections;
 
+using System.Collections.Generic;
+
 namespace BatallaNavalClassLib
 {
     public class BatallaNaval
     {
+
+        public Embarcacion.TipoEmbarcacion[] ModelosEmbarcaciones
+        {
+            get {
+                return new Embarcacion.TipoEmbarcacion[] 
+                    {
+                            Embarcacion.TipoEmbarcacion.Lancha,
+                            Embarcacion.TipoEmbarcacion.Lancha,
+                            Embarcacion.TipoEmbarcacion.Crucero,
+                            Embarcacion.TipoEmbarcacion.Submarino,
+                            Embarcacion.TipoEmbarcacion.Buque,
+                            Embarcacion.TipoEmbarcacion.Portaaviones
+                    };
+            }
+        }
+
         public Jugador Jugador1 { get; private set; }
         public Jugador Jugador2 { get; private set; }
 
@@ -43,6 +61,7 @@ namespace BatallaNavalClassLib
                 }
             }
             Jugador2 = new Jugador("Máquina", mar);
+            Jugador2.AutoInicializar(ModelosEmbarcaciones);
             #endregion
         }
 

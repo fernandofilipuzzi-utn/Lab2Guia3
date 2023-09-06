@@ -44,6 +44,10 @@ namespace BatallaNavalDesktop
                 lbMensajes.Items.Add("Seleccione y ubique los barcos en su tablero.");
 
                 cbTipoEmbarcacion.Enabled = true;
+                cbTipoEmbarcacion.Items.Clear();
+                foreach(Embarcacion.TipoEmbarcacion tipo in juego.ModelosEmbarcaciones)
+                    cbTipoEmbarcacion.Items.Add(tipo.ToString());
+
                 dgvTableroJ1.Enabled = true;                 
 
                 btnNuevo.Enabled = false;
@@ -195,7 +199,6 @@ namespace BatallaNavalDesktop
             if (cbTipoEmbarcacion.Items.Count == 0)
             {
                 //inicializar jugador 2
-                juego.Jugador2.AutoInicializar();
                 PintarTablero(dgvTableroJ2, juego.Jugador2);
 
                 //comienza el juego
