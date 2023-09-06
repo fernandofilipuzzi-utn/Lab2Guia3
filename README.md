@@ -11,6 +11,11 @@ estado actual: me faltan cosas menores.
 
 **Ejercicio 2: Batalla naval**<br/>
 <br/>
+<img src="https://github.com/fernandofilipuzzi-utn/Lab2Guia3/blob/main/Ej2_BatallaNaval/BatallaNavalClassLib/uml/BatallaNaval.jpg"/>
+<br/>
+<img src="https://github.com/fernandofilipuzzi-utn/Lab2Guia3/blob/main/Ej2_BatallaNaval/BatallaNavalClassLib/uml/Interfaz.jpg"/>
+
+<br/>
 <a href="https://github.com/fernandofilipuzzi-utn/Lab2Guia3/blob/main/batallanaval_simplificado_demo/Batalla_naval_demo.zip">Demo</a>
 <br/>
 <img src="https://github.com/fernandofilipuzzi-utn/Lab2Guia3/blob/main/batallanaval_simplificado_demo/pantallazo.png"/>
