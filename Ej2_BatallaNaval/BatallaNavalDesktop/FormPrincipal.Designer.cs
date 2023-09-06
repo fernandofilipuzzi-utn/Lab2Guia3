@@ -80,7 +80,7 @@ namespace BatallaNavalDesktop
             this.dgvTableroJ1.Name = "dgvTableroJ1";
             this.dgvTableroJ1.Size = new System.Drawing.Size(390, 481);
             this.dgvTableroJ1.TabIndex = 13;
-            this.dgvTableroJ1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvTableroJ1_CellMouseClick);
+            this.dgvTableroJ1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.ConstruirAgregarBarcoJug1);
             // 
             // dgvTableroJ2
             // 
@@ -90,7 +90,7 @@ namespace BatallaNavalDesktop
             this.dgvTableroJ2.Name = "dgvTableroJ2";
             this.dgvTableroJ2.Size = new System.Drawing.Size(390, 481);
             this.dgvTableroJ2.TabIndex = 14;
-            this.dgvTableroJ2.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvTableroJ2_CellMouseClick);
+            this.dgvTableroJ2.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Jugar);
             // 
             // cbTipoEmbarcacion
             // 

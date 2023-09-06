@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="uml\BatallaNaval.jpg" />
+    <Content Include="uml\Interfaz.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GeneradorClassLib\GeneradorClassLib.csproj">

@@ -18,7 +18,7 @@ namespace BatallaNavalDesktop
     public partial class FormPrincipal : Form
 
     {
-        BatallaNaval juego;
+        BatallaNaval partida;
 
         ArrayList partidas = new ArrayList();
      
@@ -35,17 +35,17 @@ namespace BatallaNavalDesktop
             {
                 string nombreJugador = fDato.tbNombre.Text;
 
-                juego = new BatallaNaval(nombreJugador,20,10);
+                partida = new BatallaNaval(nombreJugador,20,10);
 
-                IniciarTablero(dgvTableroJ1, lbNombreJ1, juego.Jugador1);
-                IniciarTablero(dgvTableroJ2, lbNombreJ2, juego.Jugador2);
+                IniciarTablero(dgvTableroJ1, lbNombreJ1, partida.Jugador1);
+                IniciarTablero(dgvTableroJ2, lbNombreJ2, partida.Jugador2);
 
                 lbMensajes.Items.Clear();
                 lbMensajes.Items.Add("Seleccione y ubique los barcos en su tablero.");
 
                 cbTipoEmbarcacion.Enabled = true;
                 cbTipoEmbarcacion.Items.Clear();
-                foreach(Embarcacion.TipoEmbarcacion tipo in juego.ModelosEmbarcaciones)
+                foreach(Embarcacion.TipoEmbarcacion tipo in partida.ModelosEmbarcaciones)
                     cbTipoEmbarcacion.Items.Add(tipo.ToString());
 
                 dgvTableroJ1.Enabled = true;                 
@@ -66,64 +66,34 @@ namespace BatallaNavalDesktop
             fHistorial.Dispose();
         }
 
-        //
+        //         
 
-        public ArrayList ListarPartidasOrdenadas()
+        private void Jugar(object sender, DataGridViewCellMouseEventArgs e)
         {
-            for (int n = 0; n < partidas.Count - 1; n++)
+            if (partida.HaFinalizado() == false)
             {
-                for (int m = n+1; m < partidas.Count; m++)
+                int fila = e.RowIndex;
+                int columna = e.ColumnIndex;
+
+                if (e.Button == MouseButtons.Left)
                 {
-                    Partida p = (Partida)partidas[n];
-                    Partida q = (Partida)partidas[m];
-
-                    if (p.Ganadas < q.Ganadas)
-                    {
-                        object aux = partidas[n];
-                        partidas[n] = partidas[m];
-                        partidas[m] = aux;
-                    }
+                    partida.Jugar(fila, columna);
                 }
-            }
-            return partidas;
-        }
 
-        public void AgregarPartida(string nombre)
-        {
-            #region buscar el registro primero!
-            Partida buscado = null;
-            for (int n = 0; n < partidas.Count && buscado == null; n++)
-            {
-                Partida p = (Partida)partidas[n];
-                if (p.Ganador == nombre)
-                    buscado = p;
+                PintarTablero(dgvTableroJ1, partida.Jugador1);
+                PintarTablero(dgvTableroJ2, partida.Jugador2);
             }
-            #endregion
-
-            #region lo actualizo silo encuentro sono lo agrego 
-            if (buscado != null)
-                buscado.Ganadas++;
             else
-                partidas.Add(new Partida(nombre, 1));
-            #endregion
-        }              
-
-        private void dgvTableroJ2_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            int fila = e.RowIndex;
-            int columna=e.ColumnIndex;
-
-            if (e.Button == MouseButtons.Left)
             {
-                juego.Jugar(fila, columna);
+                MessageBox.Show("Finalizado!");
+                btnNuevo.Enabled = true;
+                lbMensajes.Items.Clear();
+                lbMensajes.Items.Add("El juego ha terminado!, puede iniciar uno nuevo");
             }
-
-            PintarTablero(dgvTableroJ1, juego.Jugador1);
-            PintarTablero(dgvTableroJ2, juego.Jugador2);
         }
 
         Embarcacion nueva;
-        private void dgvTableroJ1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void ConstruirAgregarBarcoJug1(object sender, DataGridViewCellMouseEventArgs e)
         {
             int fila = e.RowIndex;
             int columna = e.ColumnIndex;
@@ -166,9 +136,9 @@ namespace BatallaNavalDesktop
                     nueva = new Embarcacion(tipoBarco);
                 }
 
-                if (juego.Jugador1.HayCeldaOcupadasContiguas(fila, columna) == false)
+                if (partida.Jugador1.HayCeldasOcupadasContiguas(fila, columna) == false)
                 {
-                    nueva.AgregarCelda(juego.Jugador1[fila, columna]);
+                    nueva.AgregarCelda(partida.Jugador1[fila, columna]);
                 }
                 else
                 {
@@ -177,7 +147,7 @@ namespace BatallaNavalDesktop
 
                 if (nueva.FueUbicada() == true)
                 {
-                    juego.Jugador1.AgregarEmbarcacion(nueva);
+                    partida.Jugador1.AgregarEmbarcacion(nueva);
                     nueva = null;
                     cbTipoEmbarcacion.Items.Remove(tipo);
                     cbTipoEmbarcacion.SelectedIndex = -1;
@@ -185,7 +155,7 @@ namespace BatallaNavalDesktop
                 }
             }
 
-            PintarTablero(dgvTableroJ1, juego.Jugador1);
+            PintarTablero(dgvTableroJ1, partida.Jugador1);
 
             if (nueva!=null && nueva.FueUbicada() == false)
             {
@@ -199,9 +169,9 @@ namespace BatallaNavalDesktop
             if (cbTipoEmbarcacion.Items.Count == 0)
             {
                 //inicializar jugador 2
-                PintarTablero(dgvTableroJ2, juego.Jugador2);
+                PintarTablero(dgvTableroJ2, partida.Jugador2);
 
-                //comienza el juego
+                //comienza el partida
 
                 cbTipoEmbarcacion.Enabled = false;
                 dgvTableroJ1.Enabled = false;
@@ -213,15 +183,15 @@ namespace BatallaNavalDesktop
             }
         }
 
-        public void IniciarTablero(DataGridView dgv, Label lbNombreJug, Jugador jug)
+        private void IniciarTablero(DataGridView dgv, Label lbNombreJug, Jugador jug)
         {
             dgv.ColumnHeadersVisible = false;
             dgv.RowHeadersVisible = false;
             dgv.ScrollBars = ScrollBars.None;
             dgv.BackgroundColor = Color.Gray;
 
-            dgv.RowCount = juego.CantFilas;
-            dgv.ColumnCount = juego.CantColumnas;
+            dgv.RowCount = partida.CantFilas;
+            dgv.ColumnCount = partida.CantColumnas;
 
             for (int m = 0; m < dgv.RowCount; m++)
             {
@@ -245,7 +215,7 @@ namespace BatallaNavalDesktop
             PintarTablero(dgv,jug);
         }
 
-        public void PintarTablero(DataGridView dgv, Jugador jug)
+        private void PintarTablero(DataGridView dgv, Jugador jug)
         {
             for (int m = 0; m < dgv.RowCount; m++)
             {
@@ -272,6 +242,48 @@ namespace BatallaNavalDesktop
                     }
                 }
             }
+        }
+
+        //
+
+        public ArrayList ListarPartidasOrdenadas()
+        {
+            for (int n = 0; n < partidas.Count - 1; n++)
+            {
+                for (int m = n + 1; m < partidas.Count; m++)
+                {
+                    Partida p = (Partida)partidas[n];
+                    Partida q = (Partida)partidas[m];
+
+                    if (p.Ganadas < q.Ganadas)
+                    {
+                        object aux = partidas[n];
+                        partidas[n] = partidas[m];
+                        partidas[m] = aux;
+                    }
+                }
+            }
+            return partidas;
+        }
+
+        public void AgregarPartida(string nombre)
+        {
+            #region buscar el registro primero!
+            Partida buscado = null;
+            for (int n = 0; n < partidas.Count && buscado == null; n++)
+            {
+                Partida p = (Partida)partidas[n];
+                if (p.Ganador == nombre)
+                    buscado = p;
+            }
+            #endregion
+
+            #region lo actualizo silo encuentro sono lo agrego 
+            if (buscado != null)
+                buscado.Ganadas++;
+            else
+                partidas.Add(new Partida(nombre, 1));
+            #endregion
         }
     }
 }

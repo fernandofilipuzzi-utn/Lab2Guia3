@@ -9,7 +9,7 @@ namespace BatallaNavalClassLib
     public class Celda
     {
         public bool EstaOculta { get; set; }
-        public Embarcacion Embarcacion{ get; set; }
+        
         public int Fila { get; set; }
         public int Columna { get; set; }
         
@@ -22,6 +22,10 @@ namespace BatallaNavalClassLib
                 return Embarcacion!=null && HuboDisparo == true && Embarcacion.FueUbicada();
             }
         }
+
+        public Celda() { }
+
+        public Embarcacion Embarcacion { get; set; }
 
         public void MarcarCelda()
         {

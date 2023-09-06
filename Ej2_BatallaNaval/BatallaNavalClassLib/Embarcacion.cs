@@ -10,15 +10,15 @@ namespace BatallaNavalClassLib
     {
         public enum TipoEmbarcacion { Lancha = 1, Crucero, Submarino, Buque, Portaaviones }
 
-        List<Celda> celdas = new List<Celda>();
+        List<Celda> posiciones = new List<Celda>();
 
-        public int Longitud { get { return celdas.Count; } }
+        public int Longitud { get { return posiciones.Count; } }
 
         public Celda this[int n]
         {
             get
             {
-                return celdas[n];
+                return posiciones[n];
             }
         }
         public TipoEmbarcacion Tipo { get; private set; }
@@ -34,9 +34,9 @@ namespace BatallaNavalClassLib
             {
                 bool fueHundido = true;
                 int n = 0;
-                while (n < celdas.Count && fueHundido)
+                while (n < posiciones.Count && fueHundido==true)
                 {
-                    fueHundido |= celdas[n].HuboImpacto;
+                    fueHundido &= posiciones[n].HuboImpacto;
                     n++;
                 }
                 return fueHundido;
@@ -50,28 +50,28 @@ namespace BatallaNavalClassLib
             bool estaYaIncluida = false;
 
             //verificar que esten alineadas 
-            if (celdas.Count < 2)
+            if (posiciones.Count < 2)
             {
                 esAlineada = true;
             }
             else 
             {               
-                esAlineada |= (celdas[celdas.Count - 1].Columna == celdas[celdas.Count - 2].Columna) &&
-                                     (celda.Columna == celdas[celdas.Count - 1].Columna);
+                esAlineada |= (posiciones[posiciones.Count - 1].Columna == posiciones[posiciones.Count - 2].Columna) &&
+                                     (celda.Columna == posiciones[posiciones.Count - 1].Columna);
 
-                esAlineada |= (celdas[celdas.Count - 1].Fila == celdas[celdas.Count - 2].Fila) &&
-                                        (celda.Fila == celdas[celdas.Count - 1].Fila);
+                esAlineada |= (posiciones[posiciones.Count - 1].Fila == posiciones[posiciones.Count - 2].Fila) &&
+                                        (celda.Fila == posiciones[posiciones.Count - 1].Fila);
             }
 
             //verificar que sean contiguas
-            if (celdas.Count < 1)
+            if (posiciones.Count < 1)
             {
                 esContigua = true;
             }
             else
             {
-                Celda last = celdas.Last();
-                Celda first = celdas.First();
+                Celda last = posiciones.Last();
+                Celda first = posiciones.First();
 
                 esContigua = Math.Abs(first.Columna - celda.Columna) == 1 ||
                                 Math.Abs(last.Columna - celda.Columna) == 1 ||
@@ -80,14 +80,14 @@ namespace BatallaNavalClassLib
             }
 
             //eliminar las que no cumplen
-            for (int n = 0; n < celdas.Count; n++)
+            for (int n = 0; n < posiciones.Count; n++)
             {
-                estaYaIncluida &= celdas[n] == celda;
+                estaYaIncluida &= posiciones[n] == celda;
             }
 
             if (esContigua && esAlineada && estaYaIncluida==false)
             {
-                celdas.Add(celda);
+                posiciones.Add(celda);
             }
 
             return esContigua;
@@ -95,7 +95,7 @@ namespace BatallaNavalClassLib
 
         public bool FueUbicada()
         {
-            return (int)Tipo>0 && celdas.Count == (int)Tipo;
+            return (int)Tipo>0 && posiciones.Count == (int)Tipo;
         }
     }
 }

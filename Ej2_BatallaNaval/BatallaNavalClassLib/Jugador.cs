@@ -10,19 +10,12 @@ using GeneradorClassLib;
 namespace BatallaNavalClassLib
 {
     public class Jugador
-    {
-        
+    {     
         public string Nombre { get; private set; }
-
-        Celda[,] mar;
-        static Random azar = new Random();
+                
         List<Embarcacion> embarcaciones = new List<Embarcacion>();
 
-        public Jugador(string nombre, Celda[,] mar)
-        {
-            Nombre = nombre;
-            this.mar = mar;
-        }
+        Celda[,] mar;
 
         public Celda this[int fila, int columna]
         {
@@ -33,6 +26,12 @@ namespace BatallaNavalClassLib
                     celda = mar[fila, columna];
                 return celda;
             }
+        }
+
+        public Jugador(string nombre, Celda[,] mar)
+        {
+            Nombre = nombre;
+            this.mar = mar;
         }
 
         public void AutoInicializar(Embarcacion.TipoEmbarcacion[] modelosEmbarcaciones)
@@ -54,12 +53,22 @@ namespace BatallaNavalClassLib
 
                 if (esVertical)
                 {
-                    if (this.HayCeldaOcupadasContiguas(fila0, columna0) == false)
+                    if (this.HayCeldasOcupadasContiguas(fila0, columna0) == false)
                     {
-                        if (nueva.AgregarCelda(this[fila0, columna0]))
+                        Celda celda = this[fila0, columna0];
+
+                        if (nueva.AgregarCelda(celda))
                         {
                             ubicaciones.Descartar(fila0, columna0);
                             fila0++;
+
+                            #region revisa la siguiente celda
+                            if (this[fila0, columna0] == null)
+                                fila0 -= 2;
+
+                            if (this[fila0, columna0] == null)
+                                nueva = null;
+                            #endregion
                         }
                         else
                         {
@@ -90,7 +99,7 @@ namespace BatallaNavalClassLib
         /// <summary>
         /// si hay alguna celda contigua ocupada
         /// </summary>
-        public bool HayCeldaOcupadasContiguas(int fila, int columna)
+        public bool HayCeldasOcupadasContiguas(int fila, int columna)
         {
             bool hayVecina = false;
             for (int m = fila-1; m < fila+2 && hayVecina == false; m++)
@@ -108,6 +117,18 @@ namespace BatallaNavalClassLib
             embarcaciones.Add(nueva);
             for (int m = 0; m < (int)nueva.Tipo; m++)
                 nueva[m].Embarcacion = nueva;
+        }
+
+        public bool QuedaAlgunaEmbarcacion()
+        {
+            bool quedaAlgunaEmbarcacion = false;
+            int n = 0;
+            while ( n<embarcaciones.Count && quedaAlgunaEmbarcacion==false)
+            {
+                quedaAlgunaEmbarcacion |= embarcaciones[n].FueHundido == false;
+                n++;
+            }
+            return quedaAlgunaEmbarcacion;
         }
     }
 }

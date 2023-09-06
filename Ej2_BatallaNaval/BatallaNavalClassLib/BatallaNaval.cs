@@ -8,7 +8,6 @@ namespace BatallaNavalClassLib
 {
     public class BatallaNaval
     {
-
         public Embarcacion.TipoEmbarcacion[] ModelosEmbarcaciones
         {
             get {
@@ -74,9 +73,9 @@ namespace BatallaNavalClassLib
             Jugador2[fila, columna].MarcarCelda();
         }
 
-        public bool Finalizado()
+        public bool HaFinalizado()
         {
-            return false;
+            return Jugador1.QuedaAlgunaEmbarcacion()==false || Jugador2.QuedaAlgunaEmbarcacion()==false;
         }
 
     }
