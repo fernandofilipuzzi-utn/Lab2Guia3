@@ -399,5 +399,5 @@ FodyWeavers.xsd
 
 bin
 obj
-.~ml
+*.~ml
 *package
