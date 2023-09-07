@@ -175,6 +175,10 @@ namespace BuscaMinasDesktop
                         {
                             if (c.HayMina == true)
                             {
+                                if (c.HaDetonado)
+                                {
+                                    dgvTablero[n, m].Style.BackColor = Color.Red;
+                                }
                                 dgvTablero[n, m].Value = "◍";
                             }
                             else
@@ -190,6 +194,9 @@ namespace BuscaMinasDesktop
                     }
                 }
             }
+            dgvTablero.ClearSelection();
+
+            lbMarcas.Text = nuevo.Marcas.ToString("000");
         }
 
         private void dgvTablero_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -205,21 +212,26 @@ namespace BuscaMinasDesktop
             {
                 nuevo.MarcarCelda(row, col);
             }
-
-            PintarTablero();
-
+            
             if (nuevo.HaFinalizado() == true)
             {
                 timer1.Stop();
                 AgregarPartida(nuevo.Jugador, tiempo);
                 dgvTablero.Enabled = false;
             }
+
+            PintarTablero();
         }
 
         int tiempo=0;
         private void timer1_Tick(object sender, EventArgs e)
         {
-            lbTiempo.Text = (tiempo++).ToString("0000") ; 
+            tiempo++;
+            int h = tiempo / 3600;
+            int m = (tiempo%3600) / 60;
+            int s = ((tiempo % 3600) % 60);
+
+            lbTiempo.Text = $"{h:00}:{m:00}:{s:00}"; 
         }
     }
 }

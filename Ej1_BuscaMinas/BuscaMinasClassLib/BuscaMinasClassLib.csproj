@@ -50,7 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="uml\BuscaMinas.jpg" />
-    <Content Include="uml\Formulario.png" />
+    <Content Include="uml\Formulario2.png" />
+    <Content Include="uml\Formulario1.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GeneradorClassLib\GeneradorClassLib.csproj">

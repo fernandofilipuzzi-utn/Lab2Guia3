@@ -9,6 +9,8 @@ namespace BuscaMinasClassLib
 {
     public class BuscaMinas
     {
+        public int Marcas { get; private set; }
+
         Celda[,] tablero;
         int despejadasYMarcadas;
         public int Filas { get; private set; }
@@ -87,6 +89,7 @@ namespace BuscaMinasClassLib
                 {
                     despejadasYMarcadas--;
                 }
+                Marcas--;
             }
             else if (this[fila, columna].Estado == Celda.TipoEstado.Oculta)
             {
@@ -95,6 +98,7 @@ namespace BuscaMinasClassLib
                 {
                     despejadasYMarcadas++;
                 }
+                Marcas++;
             }
         }
 
@@ -108,6 +112,7 @@ namespace BuscaMinasClassLib
             {
                 haFinalizado = true;
                 this[fila, columna].HaDetonado = true;
+                this[fila, columna].Estado = Celda.TipoEstado.Despejado;
                 MostrarMinasRestantes(this[fila, columna]);
             }
         }

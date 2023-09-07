@@ -35,7 +35,7 @@ namespace BuscaMinasDesktop
             this.dgvTablero = new System.Windows.Forms.DataGridView();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.lbTiempo = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lbMarcas = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTablero)).BeginInit();
             this.SuspendLayout();
             // 
@@ -75,27 +75,29 @@ namespace BuscaMinasDesktop
             // lbTiempo
             // 
             this.lbTiempo.AutoSize = true;
-            this.lbTiempo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbTiempo.BackColor = System.Drawing.SystemColors.Window;
+            this.lbTiempo.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbTiempo.Location = new System.Drawing.Point(548, 19);
             this.lbTiempo.Name = "lbTiempo";
-            this.lbTiempo.Size = new System.Drawing.Size(0, 16);
+            this.lbTiempo.Size = new System.Drawing.Size(0, 18);
             this.lbTiempo.TabIndex = 14;
             // 
-            // label1
+            // lbMarcas
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(66, 19);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(0, 16);
-            this.label1.TabIndex = 15;
+            this.lbMarcas.AutoSize = true;
+            this.lbMarcas.BackColor = System.Drawing.SystemColors.Window;
+            this.lbMarcas.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbMarcas.Location = new System.Drawing.Point(66, 19);
+            this.lbMarcas.Name = "lbMarcas";
+            this.lbMarcas.Size = new System.Drawing.Size(0, 18);
+            this.lbMarcas.TabIndex = 15;
             // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(850, 567);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lbMarcas);
             this.Controls.Add(this.lbTiempo);
             this.Controls.Add(this.dgvTablero);
             this.Controls.Add(this.btnVerHistorial);
@@ -117,7 +119,7 @@ namespace BuscaMinasDesktop
         private System.Windows.Forms.DataGridView dgvTablero;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label lbTiempo;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbMarcas;
     }
 }
 
