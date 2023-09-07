@@ -34,6 +34,8 @@ namespace BatallaNavalClassLib
             this.mar = mar;
         }
 
+        static Random azar = new Random();
+
         public void AutoInicializar(Embarcacion.TipoEmbarcacion[] modelosEmbarcaciones)
         {
             Generador ubicaciones = new Generador(mar.GetLength(0), mar.GetLength(1));
@@ -41,51 +43,59 @@ namespace BatallaNavalClassLib
             Embarcacion nueva=null;
             int n = 0;
             int fila0 = 0, columna0 = 0;
-            while (n < modelosEmbarcaciones.Length )
+            while (n < modelosEmbarcaciones.Length)
             {
-                bool esVertical = true;
+                bool esVertical = false;
 
                 if (nueva == null)
                 {
+                    esVertical = azar.Next(0, 2) == 0 ;
                     nueva = new Embarcacion(modelosEmbarcaciones[n]);
                     ubicaciones.Extraer(out fila0, out columna0);
                 }
 
-                if (esVertical)
+                if (this.HayCeldasOcupadasContiguas(fila0, columna0) == true)
                 {
-                    if (this.HayCeldasOcupadasContiguas(fila0, columna0) == false)
+                    nueva = null;
+                }
+                else
+                {
+                    Celda celda = this[fila0, columna0];
+
+                    if (nueva.AgregarCelda(celda) == true)
                     {
-                        Celda celda = this[fila0, columna0];
+                        ubicaciones.Descartar(fila0, columna0);
 
-                        if (nueva.AgregarCelda(celda))
+                        if (esVertical)
                         {
-                            ubicaciones.Descartar(fila0, columna0);
                             fila0++;
-
-                            #region revisa la siguiente celda
                             if (this[fila0, columna0] == null)
-                                fila0 -= 2;
-
-                            if (this[fila0, columna0] == null)
+                            {
+                                //fila0 -= 2;
                                 nueva = null;
-                            #endregion
+                            }
                         }
                         else
                         {
-                            nueva = null;
-                        }                        
+                            columna0++;
+                            if (this[fila0, columna0] == null)
+                            {
+                                //columna0 -= 2;
+                                nueva = null;
+                            }
+                        }
                     }
                     else
                     {
                         nueva = null;
                     }
                 }
-
-                if (nueva!=null && nueva.FueUbicada() == true)
+                
+                if (nueva != null && nueva.FueUbicada() == true)
                 {
                     this.AgregarEmbarcacion(nueva);
                     n++;
-                    nueva = null;                    
+                    nueva = null;
                 }
             }
         }

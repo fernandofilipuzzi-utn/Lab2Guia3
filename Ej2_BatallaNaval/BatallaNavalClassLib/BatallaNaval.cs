@@ -56,7 +56,7 @@ namespace BatallaNavalClassLib
             {
                 for (int n = 0; n < CantColumnas; n++)
                 {
-                    mar[m, n] = new Celda() { Fila = m, Columna = n, EstaOculta = true };
+                    mar[m, n] = new Celda() { Fila = m, Columna = n, EstaOculta =true/*false*/ };
                 }
             }
             Jugador2 = new Jugador("Máquina", mar);

@@ -50,7 +50,7 @@ namespace BatallaNavalDesktop
 
                 dgvTableroJ1.Enabled = true;                 
 
-                btnNuevo.Enabled = false;
+                btnNuevo.Enabled = true;
             }            
         }
                
@@ -223,6 +223,8 @@ namespace BatallaNavalDesktop
                 {
                     Celda c = jug[m, n];
 
+                    dgv[n, m].Value = "";
+
                     if (c.EstaOculta == false)
                     {
                         if(c.Embarcacion!=null)
@@ -242,6 +244,8 @@ namespace BatallaNavalDesktop
                     }
                 }
             }
+
+            dgv.ClearSelection();
         }
 
         //
